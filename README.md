@@ -1,89 +1,110 @@
-# AWS S3 Static Website Hosting
+# AWS S3 Static Website Hosting, Lifecycle Management & Disaster Recovery
 
 ## 📌 Project Description
 
-This project demonstrates the use of **Amazon S3** to host a static website and implement basic **data lifecycle management** and **disaster recovery (DR)** strategies.
+A hands-on **Amazon S3** project demonstrating static website hosting, **data lifecycle management**, **data protection**, and a basic **disaster recovery (DR)** strategy.
 
-The project focuses on practical AWS S3 concepts including **static website hosting, lifecycle policies, versioning, data protection, and recovery**.
+The project focuses on practical AWS skills relevant to **Cloud Support Engineer** and **Junior Cloud Engineer** roles, including **S3 Versioning, Lifecycle Policies, Storage Classes, and Cross-Region Replication**.
 
 ---
 
 ## 🏗️ Architecture
 
 ```text
-                         Internet
-                            │
-                            ▼
-                    ┌───────────────┐
-                    │   Amazon S3   │
-                    │    Bucket     │
-                    └───────┬───────┘
-                            │
-             ┌──────────────┼──────────────┐
-             │              │              │
-             ▼              ▼              ▼
-      Static Website   Lifecycle       Disaster
-         Hosting       Management      Recovery
-                            │              │
-                            ▼              ▼
-                       Object        Versioning &
-                       Lifecycle     Object Recovery
+                         Users
+                           │
+                           ▼
+                 ┌──────────────────┐
+                 │   S3 Website     │
+                 │  Source Bucket   │
+                 │   Region A       │
+                 └────────┬─────────┘
+                          │
+             ┌────────────┴────────────┐
+             │                         │
+             ▼                         ▼
+      Lifecycle Rules             Versioning
+             │                         │
+             ▼                         ▼
+      Storage Class              Data Recovery
+      Management
+             │
+             │ Cross-Region Replication
+             ▼
+                 ┌──────────────────┐
+                 │   S3 DR Bucket   │
+                 │   Region B       │
+                 └──────────────────┘
 ```
 
 ---
 
 ## 🎯 Objectives
 
-### 1. Host a static website using Amazon S3
+### 1. Host a Static Website Using Amazon S3
 
-Configured an Amazon S3 bucket to host a static website containing HTML, CSS, and other static assets. with versioning enabled to revcover from accedental deletes
+Configured an **Amazon S3 bucket for static website hosting** and uploaded the website files and assets.
 
-**Screenshot:**
+![S3 Website Bucket](./screenshots/createnupload.png)
 
-![S3 Static Website Hosting](screenshots/createnupload.png)
-The website
-![S3 Static Website Hosting](screenshots/thewebsite.png)
+### 🌐 Deployed Website
 
-
----
-### 2. implement versioning 
-
-to protect from accedental deletes and to roll back to previous versions of a website if the update is not optimal for example
-uploaded new versionof website
-![S3 Static Website Hosting](screenshots/versioning1.png)
-the new version
-![S3 Static Website Hosting](screenshots/newversion.png)
-versions in the version tab of an object index.html
-![S3 Static Website Hosting](screenshots/versioning2.png)
-
-i decided to roll back to the original copy by downloading the old version and uploading it again
-![S3 Static Website Hosting](screenshots/versioning2.png)
-
-
-
-
-
-### 2. Implement a data lifecycle strategy in Amazon S3
-
-Configured an **S3 Lifecycle Rule** to automatically manage objects according to their lifecycle and optimize storage management.
-
-created a lifecycle to transistion versions of objects to S3-standared-IA
-![S3 Lifecycle Configuration](screenshots/lifecycle1.png)
-![S3 Lifecycle Configuration](screenshots/lifecycle11.png)
-created a lifecycle to delete noncurrent objects 
-![S3 Lifecycle Configuration](screenshots/lifecycle2.png)
-all the lifecycle policies
-![S3 Lifecycle Configuration](screenshots/lifecycle3.png)
-
-
-
+![Deployed Static Website](./screenshots/thewebsite.png)
 
 ---
 
-### 3. Implement a disaster recovery (DR) strategy in Amazon S3
+### 2. Implement a Data Lifecycle Strategy in Amazon S3
 
-Enabled **S3 Versioning** in both s3 buckets source and destination 
-create the DR bucket in another region
-![S3 Versioning and Recovery](./screenshots/drbucket.png)
-DR bucket with objects newly uploaded to the source so they are replicated here 
-![S3 Lifecycle Configuration](screenshots/dr.png)
+Configured **S3 Lifecycle Rules** to automatically manage object versions and optimize storage.
+
+- Configured object transitions to **S3 Standard-IA** for less frequently accessed data.
+- Configured expiration of **noncurrent object versions** to manage storage over time.
+
+![Lifecycle Transition Rule](./screenshots/lifecycle1.png)
+
+![Lifecycle Configuration](./screenshots/lifecycle11.png)
+
+![Noncurrent Version Expiration](./screenshots/lifecycle2.png)
+
+![S3 Lifecycle Rules](./screenshots/lifecycle3.png)
+
+---
+
+### 3. Implement a Disaster Recovery (DR) Strategy in Amazon S3
+
+Enabled **S3 Versioning** and configured a separate **S3 bucket in another AWS Region** as a DR destination.
+
+New objects uploaded to the source bucket are replicated to the destination bucket, providing a separate copy of the website data for **cross-region disaster recovery**.
+
+![DR Bucket](./screenshots/drbucket.png)
+
+![Cross-Region Replicated Objects](./screenshots/dr.png)
+
+---
+
+## 🔐 Data Protection
+
+**S3 Versioning** was enabled on the source and DR buckets to protect against accidental overwrites and deletions.
+
+A previous version of the website was also recovered and restored as the current object, demonstrating a practical **rollback and recovery** workflow.
+
+![S3 Versioning](./screenshots/versioning1.png)
+
+![Updated Website Version](./screenshots/newversion.png)
+
+![Object Versions](./screenshots/versioning2.png)
+
+---
+
+## ☁️ AWS Skills Demonstrated
+
+- Amazon S3
+- Static Website Hosting
+- S3 Versioning
+- S3 Lifecycle Management
+- S3 Standard-IA
+- Cross-Region Replication (CRR)
+- Data Protection
+- Disaster Recovery
+- Backup & Recovery
+- Storage Optimization
